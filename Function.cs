@@ -10,7 +10,13 @@ var serializer = new DefaultLambdaJsonSerializer(x => x.PropertyNameCaseInsensit
 // The function handler that will be called for each Lambda event
 var handler = async (APIGatewayProxyRequest request) =>
 {
-    var socketRequest = request.To<OnDisconnectCommand>(serializer);
+    var socketRequest = new SocketMessage<OnDisconnectCommand>
+    {
+        Message = new OnDisconnectCommand
+        {
+            ConnectionId = request.RequestContext.ConnectionId
+        }
+    };
     return await innerHandler.Handle(socketRequest);
 };
 

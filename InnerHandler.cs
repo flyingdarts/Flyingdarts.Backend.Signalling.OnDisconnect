@@ -1,3 +1,4 @@
+using Amazon.DynamoDBv2;
 using Amazon.Lambda.APIGatewayEvents;
 using Flyingdarts.Lambdas.Shared;
 using MediatR;
@@ -17,8 +18,13 @@ public class InnerHandler
     }
     public async Task<APIGatewayProxyResponse> Handle(SocketMessage<OnDisconnectCommand> request)
     {
-        request.Message.ConnectionId = request.ConnectionId;
-
-        return await _mediator.Send(request.Message);
+        try
+        {
+            return await _mediator.Send(request.Message!);
+        }
+        catch (AmazonDynamoDBException e)
+        {
+            return Responses.InternalServerError($"Failed to send message: {e.Message}");
+        }
     }
 }
