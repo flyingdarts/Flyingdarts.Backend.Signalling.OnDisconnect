@@ -17,8 +17,6 @@ public class InnerHandler
     }
     public async Task<APIGatewayProxyResponse> Handle(SocketMessage<OnDisconnectCommand> request)
     {
-        if (request?.Message is null)
-            throw new BadRequestException("Unable to parse request.", typeof(OnDisconnectCommand));
         request.Message.ConnectionId = request.ConnectionId;
 
         return await _mediator.Send(request.Message);
