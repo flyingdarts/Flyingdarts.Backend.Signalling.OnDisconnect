@@ -9,13 +9,11 @@ public class InnerHandler
 {
     private readonly IMediator _mediator;
 
-    public InnerHandler()
+    public InnerHandler(IMediator mediator)
     {
+        _mediator = mediator;
     }
-    public InnerHandler(ServiceProvider serviceProvider)
-    {
-        _mediator = serviceProvider.GetRequiredService<IMediator>();
-    }
+
     public async Task<APIGatewayProxyResponse> Handle(SocketMessage<OnDisconnectCommand> request)
     {
         try

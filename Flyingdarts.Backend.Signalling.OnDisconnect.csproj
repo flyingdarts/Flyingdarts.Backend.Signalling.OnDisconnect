@@ -22,7 +22,4 @@
   <ItemGroup>
     <None Include=".github\workflows\build-and-publish-lambda.yml" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Flyingdarts.Backend.User.Profile.Create\Flyingdarts.Backend.User.Profile.Create.csproj" />
-  </ItemGroup>
 </Project>
